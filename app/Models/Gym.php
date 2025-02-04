@@ -15,8 +15,12 @@ class Gym extends Model
         'phone',
         'location'
     ];
-    public function User()
+    public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function customer()
+    {
+        return $this->hasMany(Customer::class);
     }
 }

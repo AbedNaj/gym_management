@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 
-class RegisterUserController extends Controller
+class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('admin.index');
     }
 
     /**
@@ -22,7 +19,7 @@ class RegisterUserController extends Controller
      */
     public function create()
     {
-        return view('auth.register');
+        //
     }
 
     /**
@@ -30,24 +27,7 @@ class RegisterUserController extends Controller
      */
     public function store(Request $request)
     {
-        $UserAttr = $request->validate([
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'confirmed'],
-        ]);
-
-        $GymAttr = $request->validate([
-            'gymName' => ['required', 'string'],
-            'phone' => ['required', 'string'],
-            'location' => ['required', 'string'],
-
-        ]);
-
-        $user =  User::create($UserAttr);
-
-        $user->gym()->create($GymAttr);
-        Auth::login($user);
-        return redirect('/admin');
+        //
     }
 
     /**

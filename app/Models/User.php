@@ -47,7 +47,7 @@ class User extends Authenticatable
     }
 
 
-    public function Gym()
+    public function gym()
     {
         return $this->hasOne(Gym::class);
     }

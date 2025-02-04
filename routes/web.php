@@ -1,29 +1,58 @@
 <?php
 
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
+// Global utility routes
+Route::get('/change/{lang}', LanguageController::class)->name('lang.change');
+
+// Guest-only routes
+Route::middleware('guest')->group(function () {
+    // Authentication
+    Route::controller(SessionController::class)->group(function () {
+        Route::get('/login', 'create')->name('login');
+        Route::post('/login', 'store');
+    });
+
+    // Registration
+    Route::controller(RegisterUserController::class)->group(function () {
+        Route::get('/register', 'create')->name('register');
+        Route::post('/register', 'store');
+    });
+});
+
+// Authenticated routes
+Route::middleware('auth')->group(function () {
+    // Logout
+    Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
+
+    // Admin panel
+    Route::prefix('/admin')->name('admin.')->group(function () {
+        // Dashboard
+        Route::get('/', [AdminController::class, 'index'])->name('dashboard');
+
+        // Customers
+        Route::controller(CustomerController::class)->group(function () {
+            Route::get('/customers', 'index')->name('customers.index');
+
+            Route::post('/customers/create', 'store');
+            Route::get('/customers/create', 'create')->name('customers.create');
+
+            Route::patch('/customers/{customer}', 'update')->name('customers.update');
+            Route::get('/customers/{customer}/edit', 'edit')->name('customers.edit')->can('update', 'customer');
+
+            Route::delete('/customers/destroy/{customer}', 'destroy')->name('customers.delete')->can('delete', 'customer');
+
+            Route::get('customers/search', 'search')->name('customers.search');
+        });
+    });
+});
+
+// Public welcome page
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::middleware('guest')->group(function () {
-    Route::get('/login', [SessionController::class, 'create'])->name('login.form');
-    Route::post('/login', [SessionController::class, 'store'])->name('login');
-
-    Route::get('/register', [RegisterUserController::class, 'create'])->name('register.form');
-    Route::post('/register', [RegisterUserController::class, 'store'])->name('register');
-});
-
-Route::middleware('auth')->group(function () {
-
-    Route::delete('/logout', [SessionController::class, 'destroy']);
-
-    Route::get('/admin', function () {
-        return view('admin.index');
-    });
-    Route::get('/admin/customers', function () {
-        return view('admin.customers.index');
-    });
 });

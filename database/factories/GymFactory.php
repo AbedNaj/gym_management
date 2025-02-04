@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class GymFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'gymName' => fake()->name(),
+            'location' => fake()->locale(),
+            'phone' => fake()->phoneNumber(),
+            'user_id' => User::factory()
         ];
     }
 }

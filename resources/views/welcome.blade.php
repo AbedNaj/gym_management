@@ -6,19 +6,18 @@
         <div class="max-w-7xl mx-auto">
             <div class="text-center">
                 <h1 class="text-4xl sm:text-6xl font-bold mb-8">
-                    @lang('messages.welcome')
-                    <span class="gradient-text">Confidence</span>
+                    @lang('home.welcome')
+
                 </h1>
                 <p class="hero-text text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
-                    Streamline your gym operations, manage members, and grow your business with our all-in-one gym management platform.
+                    @lang('home.slogan')
+
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="" class="hero-button bg-indigo-600 hover:bg-indigo-700 px-8 py-4 rounded-xl text-lg font-semibold transition transform hover:scale-105 text-white">
-                        Register Your Gym
+                        @lang('home.register')
                     </a>
-                    <a href="" class="hero-button bg-gray-800 hover:bg-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 px-8 py-4 rounded-xl text-lg font-semibold transition transform hover:scale-105 text-white">
-                        Request Demo
-                    </a>
+
                 </div>
             </div>
         </div>
