@@ -2,12 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Customer;
 use App\Models\User;
+use App\Models\plans;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Support\Facades\Auth;
 
-class CustomerPolicy
+class PlansPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -20,7 +19,7 @@ class CustomerPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Customer $customer): bool
+    public function view(User $user, plans $plans): bool
     {
         return false;
     }
@@ -33,28 +32,27 @@ class CustomerPolicy
         return false;
     }
 
-
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Customer $customer): bool
+    public function update(User $user, plans $plans): bool
     {
 
-        return  $customer->gym->user->is($user);
+        return $plans->gym->user->is($user);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Customer $customer): bool
+    public function delete(User $user, plans $plans): bool
     {
-        return $customer->gym->user->is($user);
+        return $plans->gym->user->is($user);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Customer $customer): bool
+    public function restore(User $user, plans $plans): bool
     {
         return false;
     }
@@ -62,7 +60,7 @@ class CustomerPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Customer $customer): bool
+    public function forceDelete(User $user, plans $plans): bool
     {
         return false;
     }

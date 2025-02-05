@@ -34,7 +34,9 @@
             </div>
             <nav class="mt-4 flex-grow">
                 <x-admin.nav :active="request()->is('admin')" href="/admin" svg="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">Dashboard</x-admin.nav>
-                <x-admin.nav :active="request()->is('admin/customers*')" href="/admin/customers" svg="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z">Customers</x-admin.nav>
+                <x-admin.nav :active="request()->is('admin/customers*')" href="{{route('admin.customers.index')}}" svg="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z">Customers</x-admin.nav>
+                <x-admin.nav :active="request()->is('admin/plans*')" href="{{route('admin.plans.index')}}" svg="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z">Subscription Plans</x-admin.nav>
+
             </nav>
         </aside>
 
@@ -57,7 +59,6 @@
     </div>
 
     <script>
-        // Modified toggle to use Tailwind classes
         document.getElementById("mobileMenuButton").addEventListener("click", function() {
             const sidebar = document.getElementById("sidebar");
             sidebar.classList.toggle("-translate-x-full");

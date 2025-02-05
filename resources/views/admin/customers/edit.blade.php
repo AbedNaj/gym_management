@@ -11,7 +11,7 @@
         <x-form.input name="phoneNumber" value="{{ $customer->phoneNumber}}">
             Customer Phone Number
         </x-form.input>
-        <x-form.button>Edit</x-form.button>
+        <x-form.button>Save</x-form.button>
 
 
 

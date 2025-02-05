@@ -1,11 +1,18 @@
 <?php
 
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PlansController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
+
+
+// Public welcome page
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Global utility routes
 Route::get('/change/{lang}', LanguageController::class)->name('lang.change');
@@ -49,10 +56,21 @@ Route::middleware('auth')->group(function () {
 
             Route::get('customers/search', 'search')->name('customers.search');
         });
-    });
-});
 
-// Public welcome page
-Route::get('/', function () {
-    return view('welcome');
+        //plans 
+        Route::controller(PlansController::class)->group(function () {
+
+            Route::get('/plans', 'index')->name('plans.index');
+
+            Route::post('/plans/create', 'store');
+            Route::get('/plans/create', 'create')->name('plans.create');
+
+            Route::patch('/plans/{plans}', 'update')->name('plans.update');
+            Route::get('/plans/{plans}/edit', 'edit')->name('plans.edit')->can('update', 'plans');
+
+            Route::delete('/plans/destroy/{plans}', 'destroy')->name('plans.delete')->can('delete', 'plans');
+
+            Route::get('plans/search', 'search')->name('plans.search');
+        });
+    });
 });

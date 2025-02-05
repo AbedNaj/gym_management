@@ -14,7 +14,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $gym = Auth::user()->Gym;
+        $gym = Auth::user()->gym;
 
         $customers = Customer::where('gym_id', $gym->id)
             ->latest('created_at')

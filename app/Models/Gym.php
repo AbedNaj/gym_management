@@ -23,4 +23,9 @@ class Gym extends Model
     {
         return $this->hasMany(Customer::class);
     }
+
+    public function plans()
+    {
+        return $this->hasMany(plans::class);
+    }
 }

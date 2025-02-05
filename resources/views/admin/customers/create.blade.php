@@ -1,4 +1,4 @@
-<x-admin>
+<x-admin title="Add New Customer">
 
 
     <x-form.form method="POST">
