@@ -24,7 +24,8 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->call([
 
-            PlansSeeder::class
+
+            RegistrationSeeder::class
         ]);
     }
 }

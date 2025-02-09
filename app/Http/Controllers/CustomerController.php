@@ -48,10 +48,7 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $customer)
-    {
-        dd($customer);
-    }
+    public function show(Customer $customer) {}
 
     /**
      * Show the form for editing the specified resource.

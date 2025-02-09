@@ -3,9 +3,11 @@
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
+use App\Models\registration;
 use Illuminate\Support\Facades\Route;
 
 
@@ -71,6 +73,28 @@ Route::middleware('auth')->group(function () {
             Route::delete('/plans/destroy/{plans}', 'destroy')->name('plans.delete')->can('delete', 'plans');
 
             Route::get('plans/search', 'search')->name('plans.search');
+        });
+
+        Route::controller(RegistrationController::class)->group(function () {
+
+
+            Route::get('/registration', 'index')->name('registration.index');
+
+
+            Route::get('/registration/show/{customer?}', 'show')->name(name: 'registration.show')->can('create', [registration::class, 'customer']);
+
+            Route::get('/registration/registrations/{customer?}', 'showAll')->name(name: 'registration.showAll')->can('create', [registration::class, 'customer']);
+
+            Route::post('/registration/create/{customer?}', 'store');
+            Route::get('/registration/create/{customer?}', 'create')->name(name: 'registration.create')->can('create', [registration::class, 'customer']);
+
+
+
+            Route::patch('/registration/{registration}', 'update')->name('registration.update');
+            Route::get('/registration/{registration}/edit', 'edit')->name('registration.edit')->can('update', 'registration');
+
+            Route::delete('/registration/destroy/{registration}', 'destroy')->name('registration.delete')->can('delete', 'Registration');
+            Route::get('registration/search', 'search')->name('registration.search');
         });
     });
 });

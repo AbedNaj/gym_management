@@ -11,7 +11,7 @@ $defaults = [
 @endphp
 
 <div class="mb-5">
-    <label for={{ $name }}class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{$slot}}</label>
+    <label for={{ $name }} class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{$slot}}</label>
 
     <input {{$attributes($defaults)}} />
 

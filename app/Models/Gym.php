@@ -28,4 +28,8 @@ class Gym extends Model
     {
         return $this->hasMany(plans::class);
     }
+    public function registration()
+    {
+        return $this->hasMany(registration::class);
+    }
 }

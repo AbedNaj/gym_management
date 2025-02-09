@@ -14,4 +14,8 @@ class Customer extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+    public function registration()
+    {
+        return $this->hasMany(registration::class);
+    }
 }

@@ -19,4 +19,9 @@ class plans extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    public function registration()
+    {
+        return $this->hasMany(registration::class);
+    }
 }
