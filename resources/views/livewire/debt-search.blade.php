@@ -29,7 +29,7 @@
                     @isset($customer['name'])
                     {{ $customer['name'] }}
                     @else
-                    <span class="text-gray-400">Unnamed customer</span>
+                    <span class="text-gray-400">No Debt</span>
                     @endisset
                 </div>
                 @endforeach
@@ -54,9 +54,9 @@
                 @endforeach
             </select>
         </div>
-        @if (Route::is('admin.registration.search'))
+        @if (Route::is('admin.debt.search'))
 
-        <x-button href="{{route('admin.registration.index')}}">reset</x-button>
+        <x-button href="{{route('admin.debts.index')}}">reset</x-button>
 
         @endif
     </div>

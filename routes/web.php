@@ -7,6 +7,8 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DebtsController;
+use App\Models\debts;
 use App\Models\registration;
 use Illuminate\Support\Facades\Route;
 
@@ -90,11 +92,31 @@ Route::middleware('auth')->group(function () {
 
 
 
-            Route::patch('/registration/{registration}', 'update')->name('registration.update');
+            Route::patch('/registration/{registration}', 'update')->name('registration.update')->can('update', 'registration');
             Route::get('/registration/{registration}/edit', 'edit')->name('registration.edit')->can('update', 'registration');
 
             Route::delete('/registration/destroy/{registration}', 'destroy')->name('registration.delete')->can('delete', 'Registration');
             Route::get('registration/search', 'search')->name('registration.search');
+        });
+
+        Route::controller(DebtsController::class)->group(function () {
+
+
+            Route::get('/debt', 'index')->name('debts.index');
+
+
+            Route::get('/debt/show/{customer?}', 'show')->name(name: 'debt.show')->can('view', [debts::class, 'customer']);
+
+            Route::get('debt/debts/{customer}', 'showAll')->name(name: 'debt.showAll')->can('view', [debts::class, 'customer']);
+
+            Route::post('/debt/create/{customer}', 'store')->name('debt.store')->can('create', [debts::class, 'customer']);
+            Route::get('/debt/create/{customer}', 'create')->name(name: 'debt.create')->can('create', [debts::class, 'customer']);
+
+
+            Route::patch('/debt/{debt}', 'update')->name('debt.update')->can('update', 'debt');
+            Route::get('/debt/{debt}/edit', 'edit')->name('debt.edit')->can('update', 'debt');
+
+            Route::get('debt/search', 'search')->name('debt.search');
         });
     });
 });

@@ -16,7 +16,7 @@ class PlansController extends Controller
     {
         $gym = Auth::user()->gym->id;
         $plans = plans::where('gym_id', '=', $gym)
-            ->latest()->paginate(5);
+            ->latest()->paginate(7);
 
         return view('admin.plans.index', [
             'plans' => $plans
@@ -83,7 +83,7 @@ class PlansController extends Controller
         $gym = Auth::user()->gym->id;
         $plans = plans::latest()->where('gym_id', '=', $gym)
             ->where('name', 'like', '%' . request('name') . '%')
-            ->paginate(5);
+            ->paginate(7);
 
         return view('admin.plans.index', [
             'plans' => $plans

@@ -21,7 +21,7 @@ class PlansFactory extends Factory
             'name' => fake()->name,
             'duration_in_days' => fake()->randomElement(['30', '60', '90']),
             'price' => fake()->randomElement(['150', '300', '450']),
-            'gym_id' => Gym::factory()
+            //  'gym_id' => Gym::factory()
         ];
     }
 }

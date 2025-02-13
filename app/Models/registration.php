@@ -40,4 +40,9 @@ class registration extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    public function debt()
+    {
+        return $this->hasOne(debts::class);
+    }
 }

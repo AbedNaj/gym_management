@@ -20,7 +20,7 @@ class CustomerFactory extends Factory
         return [
             'name' => fake()->name(),
             'phoneNumber' => fake()->phoneNumber(),
-            'gym_id' => Gym::factory(),
+            //     'gym_id' => Gym::factory(),
         ];
     }
 }

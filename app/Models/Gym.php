@@ -15,6 +15,7 @@ class Gym extends Model
         'phone',
         'location'
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -24,6 +25,7 @@ class Gym extends Model
         return $this->hasMany(Customer::class);
     }
 
+
     public function plans()
     {
         return $this->hasMany(plans::class);
@@ -31,5 +33,10 @@ class Gym extends Model
     public function registration()
     {
         return $this->hasMany(registration::class);
+    }
+
+    public function debt()
+    {
+        return $this->hasMany(debts::class);
     }
 }

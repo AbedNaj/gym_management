@@ -1,4 +1,4 @@
-<x-admin title="Select A User">
+<x-admin title="Select A Customer">
     <section class="shadow-lg rounded-xl bg-white dark:bg-gray-800 p-6 max-w-xl mx-auto">
         <section class="space-y-4">
             @livewire('Customer-Search')

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\debts;
 use App\Models\plans;
 use App\Models\registration;
 use App\Http\Requests\StoreregistrationRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\UpdateregistrationRequest;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class RegistrationController extends Controller
 {
@@ -23,12 +25,13 @@ class RegistrationController extends Controller
         $gym = Session::get('gym_id');
 
         $registration  = Registration::orderByDesc('start_date')
+            ->latest()
             ->where('gym_id', $gym)
             ->select('id', 'start_date', 'end_date', 'status', 'customer_id')
             ->with(['customer' => function ($query) {
                 $query->select('id', 'name');
             }])
-            ->paginate(5);
+            ->paginate(perPage: 7);
 
         return view('admin.registration.index', ['registration' => $registration]);
     }
@@ -51,7 +54,7 @@ class RegistrationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreregistrationRequest $request)
+    public function store(StoreregistrationRequest $request, Customer $customer)
     {
 
 
@@ -67,10 +70,18 @@ class RegistrationController extends Controller
             ->addDays($planDaysCount)
             ->toDateString();
 
+        if ($attr['paid_amount'] <  $attr['plan_price']) {
 
-
-
-
+            debts::create([
+                'debt_amount' => $attr['plan_price'],
+                'paid_amount' =>  $attr['paid_amount'],
+                'debt_date' => now()->toDateString(),
+                'gym_id' => $gym,
+                'customer_id' => $attr['customer_id'],
+            ]);
+        } elseif ($attr['paid_amount'] >  $attr['plan_price']) {
+            throw ValidationException::withMessages(['paid_amount' => 'Payed Price Is More Than Plan Price']);
+        }
         $attr = registration::create($attr);
 
 
@@ -88,6 +99,7 @@ class RegistrationController extends Controller
 
 
         $registration = registration::where('customer_id', '=', $customerID)
+            ->where('gym_id', '=', Session::get('gym_id'))
             ->latest()
             ->first();
 
@@ -109,7 +121,7 @@ class RegistrationController extends Controller
             ->with(['customer' => function ($query) {
                 $query->select('id', 'name');
             }])
-            ->paginate(5);
+            ->paginate(7);
 
 
 
@@ -167,7 +179,7 @@ class RegistrationController extends Controller
             })
             // Always apply gym_id filter
             ->where('gym_id', $gym)
-            ->paginate(5);
+            ->paginate(7);
 
         return view('admin.registration.index', ['registration' => $registrations]);
     }

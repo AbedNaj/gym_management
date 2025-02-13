@@ -19,4 +19,8 @@
 
 
 
+    <div class="mt-2">
+
+        {{ $plans->links() }}
+    </div>
 </x-admin>

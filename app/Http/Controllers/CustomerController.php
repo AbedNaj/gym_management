@@ -18,7 +18,7 @@ class CustomerController extends Controller
 
         $customers = Customer::where('gym_id', $gym->id)
             ->latest('created_at')
-            ->paginate(5);
+            ->paginate(7);
         return view('admin.customers.index', [
             'customers' => $customers
         ]);
@@ -90,7 +90,7 @@ class CustomerController extends Controller
             'name',
             'like',
             '%' . request('customer') . '%'
-        )->where('gym_id', '=', $gym->id)->paginate(5);
+        )->where('gym_id', '=', $gym->id)->paginate(7);
 
 
         return view('admin.customers.index', [

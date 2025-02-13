@@ -1,4 +1,4 @@
-@props(['columns' => [], 'datas' => [],'editRoute' , 'deleteRoute' , 'delete' =>true])
+@props(['columns' => [], 'datas' => [],'editRoute' , 'deleteRoute' , 'delete' =>true ])
 
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full mx-auto">
@@ -36,6 +36,8 @@
                         'bg-orange-200 text-orange-900 border border-orange-500' => $data['status'] === 'suspended',
                         'bg-gray-200 text-gray-900 border border-gray-400' => $data['status'] === 'canceled',
                         'bg-yellow-200 text-yellow-900 border border-yellow-500' => $data['status'] === 'pending',
+                        'bg-green-200 text-green-800 border border-green-500' => $data['status'] === 'paid',
+                        'bg-red-200 text-red-800 border border-red-500' => $data['status'] === 'unpaid',
                         ])>
                         {{ ucfirst($data['status']) }}
                     </span>
@@ -48,6 +50,8 @@
                 <td class="px-4 py-4 whitespace-nowrap">
                     <div class="flex justify-center gap-x-4">
                         <a href="{{ route($editRoute, $data['id']) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">edit</a>
+
+
                         @if ($delete==true)
                         <x-form.form method="post" action="{{ route($deleteRoute, $data['id']) }}" class="inline">
                             @method('DELETE')

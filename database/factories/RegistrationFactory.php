@@ -20,9 +20,9 @@ class RegistrationFactory extends Factory
     public function definition(): array
     {
         return [
-            'plans_id' => plans::factory(),
-            'gym_id' => Gym::factory(),
-            'customer_id' => Customer::factory(),
+            //    'plans_id' => plans::factory(),
+            //    'gym_id' => Gym::factory(),
+            //    'customer_id' => Customer::factory(),
             'start_date' => fake()->date(),
             'end_date' => fake()->date(),
 

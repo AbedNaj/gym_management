@@ -21,7 +21,7 @@ class GymFactory extends Factory
             'gymName' => fake()->name(),
             'location' => fake()->locale(),
             'phone' => fake()->phoneNumber(),
-            'user_id' => User::factory()
+            //   'user_id' => User::factory()
         ];
     }
 }

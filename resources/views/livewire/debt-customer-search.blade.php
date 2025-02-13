@@ -14,7 +14,7 @@
     <div class="fixed top-0 right-0 bottom-0 left-0" wire:click='fresh'></div>
     <div class="absolute z-10 w-full bg-white shadow-lg rounded-b-lg max-h-60 overflow-auto">
         @foreach($customers as $i => $customer)
-        <div class="p-2  cursor-pointer border-b border-gray-100  text-black text-white:dark {{ $highlightindex == $i ? 'bg-blue-500 text-white' : '' }}"
+        <div class="p-2  cursor-pointer border-b border-gray-100  text-black text-white:dark {{ $highlightindex == $i ? 'bg-blue-500  text-white' : '' }}"
             wire:mouseover="setHighlightIndex({{ $i }})" wire:click="selectCustomerByIndex({{ $i }})">
 
             @isset($customer['name'])

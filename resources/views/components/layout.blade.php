@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang=" {{app()->getLocale()}}" dir="{{app()->getLocale() == 'en' ? 'ltr' : 'rtl'}}" class="dark">
+<html lang=" {{app()->getLocale()}}" dir="{{app()->getLocale() == 'en' ? 'ltr' : 'rtl'}}" class="
+
+">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GymArcane - Manage Your Gym</title>
     @vite(['resources/js/app.js', 'resources/css/app.css'])
+    <script>
+        if (localStorage.getItem('theme') === 'dark' ||
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
 </head>
 
 <body class="bg-gray-50 text-dark-primary dark:bg-dark-primary dark:text-white">
@@ -31,21 +41,21 @@
                     <a href="#"
                         class="text-gray-600 hover:text-dark-primary dark:text-gray-300 dark:hover:text-white px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">@lang('home.about')</a>
                     @auth
-                        <form method="POST" action="/logout">
-                            @csrf
-                            @method('DELETE')
-                            <button
-                                class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.logout')</button>
-                        </form>
-                        <a href="{{route('admin.')}}"
-                            class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.admin')</a>
+                    <form method="POST" action="/logout">
+                        @csrf
+                        @method('DELETE')
+                        <button
+                            class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.logout')</button>
+                    </form>
+                    <a href="/admin"
+                        class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.admin')</a>
 
                     @endauth
                     @guest
-                        <a href="{{route('register')}}"
-                            class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.register')</a>
-                        <a href="{{route('login')}}"
-                            class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.login')</a>
+                    <a href="{{route('register')}}"
+                        class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.register')</a>
+                    <a href="{{route('login')}}"
+                        class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg transition text-white">@lang('home.login')</a>
                     @endguest
 
 
