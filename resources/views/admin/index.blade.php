@@ -1,19 +1,46 @@
-<x-admin>
+<x-admin title="{{  __('dashboard.title') }}">
 
 
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm transition-colors">
-            <h3 class="text-gray-500 dark:text-gray-400 text-sm">Total Users</h3>
-            <p class="text-2xl font-bold dark:text-gray-200">1,234</p>
+    <div class="grid grid-rows-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mb-8">
+
+
+        <x-admin.card route="admin.registration.statistics.active" title="{{__('dashboard.ActiveSubscriptions')}}">{{ $activeSubs }}</x-admin.card>
+
+
+        <x-admin.card title="{{__('dashboard.ExpiringToday')}}" route="admin.registration.statistics.expiredToday" color="red">{{ $expringToday }}</x-admin.card>
+
+        <x-admin.card title="{{__('dashboard.TotalExpired')}}" route="admin.registration.statistics.expired" color="green">{{ $expringTotal }}</x-admin.card>
+
+        <x-admin.card title="{{__('dashboard.TotalMembers')}}" color="yellow">{{ $totalSubs }}</x-admin.card>
+
+        <x-admin.card title="{{__('dashboard.TotalDebt')}}" color="purple">{{ $debtSum }}</x-admin.card>
+
+        <x-admin.card title="{{__('dashboard.TotalPayments')}}" color="gray">{{ $payedSum }}</x-admin.card>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="grid grid-cols-1 lg:grid-cols-1 gap-8 mb-8">
+        <div class="lg:col-span-2 bg-white dark:bg-gray-700 p-6 rounded-lg shadow-sm">
+            <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">{{ __('dashboard.MonthlySubscriptionsGrowth') }}</h3>
+            <div class="h-64">
+
+
+
+                {!! $monthlyChart->container() !!}
+                {!! $monthlyChart->script() !!}
+
+            </div>
         </div>
+
+
+
+
+
+
     </div>
 
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm transition-colors">
-        <div class="p-6 border-b dark:border-gray-700">
-            <h3 class="text-lg font-semibold dark:text-gray-200">Recent Users</h3>
-        </div>
 
-    </div>
 </x-admin>

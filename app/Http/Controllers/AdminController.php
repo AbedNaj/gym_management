@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\monthlyChart;
+use App\Charts\monthlyGrowth;
+use App\Models\debts;
+use App\Models\registration;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -11,7 +17,33 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.index');
+        $monthlyChart = new monthlyChart();
+
+        $subscriptionStats = Registration::selectRaw("
+            COUNT(CASE WHEN status = 'active' THEN 1 END) AS activeSubs,
+            COUNT(CASE WHEN status = 'expired' AND DATE(end_date) = ? THEN 1 END) AS expiringToday,
+            COUNT(CASE WHEN status = 'expired' THEN 1 END) AS expiringTotal,
+            COUNT(id) AS totalSubs", [Carbon::yesterday()])
+            ->where('gym_id', Session::get('gym_id'))
+            ->first();
+
+        $debtStats = debts::selectRaw("
+            SUM(debt_amount) AS debtSum,
+            SUM(paid_amount) AS payedSum")->where('gym_id', Session::get('gym_id'))
+            ->first();
+        return view(
+            'admin.index',
+            [
+                'activeSubs' => $subscriptionStats->activeSubs,
+                'expringToday' => $subscriptionStats->expiringToday,
+                'expringTotal' => $subscriptionStats->expiringTotal,
+                'totalSubs' => $subscriptionStats->totalSubs,
+                'debtSum' => $debtStats->debtSum ?? 0,
+                'payedSum' => $debtStats->payedSum ?? 0,
+                'monthlyChart' => $monthlyChart,
+
+            ]
+        );
     }
 
     /**
@@ -33,10 +65,7 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(Request $request, $type) {}
 
     /**
      * Show the form for editing the specified resource.

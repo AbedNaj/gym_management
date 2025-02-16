@@ -18,13 +18,14 @@ class registration extends Model
     public static function getStatusOptions()
     {
         return [
-            self::STATUS_PENDING,
-            self::STATUS_ACTIVE,
-            self::STATUS_EXPIRED,
-            self::STATUS_CANCELED,
-            self::STATUS_FREZZED
+            'active'   => __('registration.active'),
+            'expired'  => __('registration.expired'),
+            'canceled' => __('registration.canceled'),
+            'pending'  => __('registration.pending'),
+            'freezed'  => __('registration.freezed'),
         ];
     }
+
     protected $guarded = ['id'];
     public function customer()
     {

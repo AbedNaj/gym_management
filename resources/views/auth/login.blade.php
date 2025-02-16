@@ -2,7 +2,7 @@
 
     <x-page-heading>Login Page</x-page-heading>
 
-    <x-form.form method="POST" action="{{route('login')}}">
+    <x-form.form method="POST" id="" action="{{route('login')}}">
 
 
         <x-form.input name="email" label="@lang('login.email')">@lang('login.email')</x-form.input>

@@ -5,18 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
-use Illuminate\Support\Facades\Auth;
+
 
 class CustomerController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $gym = Auth::user()->gym;
-
-        $customers = Customer::where('gym_id', $gym->id)
+        $gym = session('gym_id');
+        $customers = Customer::where('gym_id', $gym)
             ->latest('created_at')
             ->paginate(7);
         return view('admin.customers.index', [
@@ -39,7 +40,7 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $attr = $request->validated();
-        $attr['gym_id'] = Auth::user()->gym->id;
+        $attr['gym_id'] =  session('gym_id');
         Customer::create($attr);
 
         return redirect(route('admin.customers.index'));
@@ -85,12 +86,12 @@ class CustomerController extends Controller
 
     public function search()
     {
-        $gym = Auth::user()->Gym;
+        $gym = session('gym_id');
         $Customers = Customer::where(
             'name',
             'like',
             '%' . request('customer') . '%'
-        )->where('gym_id', '=', $gym->id)->paginate(7);
+        )->where('gym_id', '=', $gym)->paginate(7);
 
 
         return view('admin.customers.index', [

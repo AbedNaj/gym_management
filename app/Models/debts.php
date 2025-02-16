@@ -14,8 +14,8 @@ class debts extends Model
     public static function getStatusOptions()
     {
         return [
-            self::STATUS_UNPAID,
-            self::STATUS_PAID,
+            'PAID' => __('debts.paid'),
+            'UNPAID' => __('debts.unpaid'),
 
         ];
     }

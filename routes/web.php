@@ -76,7 +76,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('plans/search', 'search')->name('plans.search');
         });
-
+        // Registrations
         Route::controller(RegistrationController::class)->group(function () {
 
 
@@ -91,12 +91,17 @@ Route::middleware('auth')->group(function () {
             Route::get('/registration/create/{customer?}', 'create')->name(name: 'registration.create')->can('create', [registration::class, 'customer']);
 
 
-
             Route::patch('/registration/{registration}', 'update')->name('registration.update')->can('update', 'registration');
             Route::get('/registration/{registration}/edit', 'edit')->name('registration.edit')->can('update', 'registration');
 
             Route::delete('/registration/destroy/{registration}', 'destroy')->name('registration.delete')->can('delete', 'Registration');
             Route::get('registration/search', 'search')->name('registration.search');
+
+            // statistics :
+
+            Route::get('registration/statistics/active', 'active')->name('registration.statistics.active');
+            Route::get('registration/statistics/expired', 'expired')->name('registration.statistics.expired');
+            Route::get('registration/statistics/expired-today', 'expiredToday')->name('registration.statistics.expiredToday');
         });
 
         Route::controller(DebtsController::class)->group(function () {

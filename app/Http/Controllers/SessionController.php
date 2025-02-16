@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
 class SessionController extends Controller
@@ -40,6 +41,13 @@ class SessionController extends Controller
             throw ValidationException::withMessages(['password' => 'Sorry , those condetinals do not match']);
         }
         request()->session()->regenerate();
+        Session::put([
+            'gym_id' => Auth::user()->gym->id,
+            'email' => Auth::user()->email,
+            'gymName' => Auth::user()->gym->gymName,
+            'userName' => Auth::user()->name
+        ]);
+
         return redirect('/admin');
     }
 
@@ -73,6 +81,14 @@ class SessionController extends Controller
     public function destroy()
     {
         Auth::logout();
+        Session::forget([
+            'gym_id',
+            'email',
+            'gymName',
+            'userName'
+        ]);
+        Session::regenerate();
+        Session::regenerateToken();
 
         return redirect('/');
     }

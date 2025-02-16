@@ -29,9 +29,7 @@
                         class="p-2 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white rounded-lg">
                         <span id="theme-icon">🌙</span>
                     </button>
-                    <a class="mx-3" href="{{ route('lang.change', app()->getLocale() == 'ar' ? 'en' : 'ar') }}">
-                        {{ __('home.toggle_lang') }}
-                    </a>
+                    <x-localize-change></x-localize-change>
 
                 </div>
                 <div class="flex items-center space-x-4">

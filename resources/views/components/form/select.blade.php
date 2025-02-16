@@ -1,4 +1,4 @@
-@props(['name', 'options' => [], 'defaultValue' => 'Select a value'])
+@props(['name' => 'name', 'options' => [], 'defaultValue' => 'Select a value'])
 
 <label for="{{ $name }}" class="block text-sm font-medium text-gray-900 dark:text-white">
     {{ $slot }}

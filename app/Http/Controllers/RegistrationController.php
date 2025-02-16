@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Customer;
 use App\Models\debts;
 use App\Models\plans;
 use App\Models\registration;
 use App\Http\Requests\StoreregistrationRequest;
 use App\Http\Requests\UpdateregistrationRequest;
-
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,8 +25,9 @@ class RegistrationController extends Controller
 
         $gym = Session::get('gym_id');
 
-        $registration  = Registration::orderByDesc('start_date')
-            ->latest()
+        $registration  = Registration::latest()->orderByDesc('start_date')
+
+            ->orderByDesc('start_date')
             ->where('gym_id', $gym)
             ->select('id', 'start_date', 'end_date', 'status', 'customer_id')
             ->with(['customer' => function ($query) {
@@ -33,12 +35,15 @@ class RegistrationController extends Controller
             }])
             ->paginate(perPage: 7);
 
+        // Map the status values to their translated versions
+        $registration->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
         return view('admin.registration.index', ['registration' => $registration]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create(Customer $customer)
     {
         $plans = plans::latest()
@@ -123,7 +128,10 @@ class RegistrationController extends Controller
             }])
             ->paginate(7);
 
-
+        $registration->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
 
 
         return view('admin.registration.show-all', ['registration' => $registration]);
@@ -138,8 +146,13 @@ class RegistrationController extends Controller
             ->with(['customer:id,name'], ['plan:id,name'])
             ->findOrFail($registration->id);
 
+        $statusOptions = registration::getStatusOptions();
 
-        return view('admin.registration.edit', ['registration' => $data]);
+
+        return view('admin.registration.edit', [
+            'registration' => $data,
+            'statusOptions' => $statusOptions
+        ]);
     }
     /**
      * Update the specified resource in storage.
@@ -181,6 +194,84 @@ class RegistrationController extends Controller
             ->where('gym_id', $gym)
             ->paginate(7);
 
-        return view('admin.registration.index', ['registration' => $registrations]);
+        $registrations->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
+
+        return view('admin.registration.index', ['registration' => $registrations->appends(request()->query())]);
+    }
+
+
+    // statistics 
+
+    function active()
+    {
+
+
+        $gym = Session::get('gym_id');
+
+        $datas = registration::latest()->where('status', '=', 'active')
+            ->where('gym_id', '=', $gym)
+            ->orderByDesc('start_date')
+            ->select('id', 'start_date', 'end_date', 'status', 'customer_id')
+            ->with(['customer' => function ($query) {
+                $query->select('id', 'name');
+            }])
+            ->paginate(10);
+        $datas->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
+        return view('admin.registration.statistics', ['datas' => $datas]);
+    }
+    function expired()
+    {
+
+
+        $gym = Session::get('gym_id');
+
+        $datas = registration::latest()->where('status', '=', 'expired')
+            ->where('gym_id', '=', $gym)
+            ->orderByDesc('end_date')
+            ->select('id', 'start_date', 'end_date', 'status', 'customer_id')
+            ->with(['customer' => function ($query) {
+                $query->select('id', 'name');
+            }])
+
+            ->paginate(10);
+        $datas->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
+        return view('admin.registration.statistics', ['datas' => $datas]);
+    }
+
+
+    public function expiredToday()
+    {
+        $gym = Session::get('gym_id');
+
+
+        $cacheKey = "expired_registrations_gym_{$gym}";
+
+
+        $datas = Cache::remember($cacheKey, now()->addDay(), function () use ($gym) {
+            return Registration::latest()
+                ->where('status', '=', 'expired')
+                ->where('gym_id', '=', $gym)
+                ->orderByDesc('end_date')
+                ->select('id', 'start_date', 'end_date', 'status', 'customer_id')
+                ->with(['customer' => function ($query) {
+                    $query->select('id', 'name');
+                }])
+                ->whereDate('end_date', Carbon::yesterday())
+                ->paginate(10);
+        });
+        $datas->getCollection()->transform(function ($item) {
+            $item->status = __('registration.' . $item->status);
+            return $item;
+        });
+        return view('admin.registration.statistics', ['datas' => $datas]);
     }
 }

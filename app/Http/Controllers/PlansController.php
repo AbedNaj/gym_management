@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\plans;
 use App\Http\Requests\StoreplansRequest;
 use App\Http\Requests\UpdateplansRequest;
-use Illuminate\Support\Facades\Auth;
 
 class PlansController extends Controller
 {
@@ -14,7 +13,7 @@ class PlansController extends Controller
      */
     public function index()
     {
-        $gym = Auth::user()->gym->id;
+        $gym = session('gym_id');
         $plans = plans::where('gym_id', '=', $gym)
             ->latest()->paginate(7);
 
@@ -38,7 +37,7 @@ class PlansController extends Controller
     {
 
         $attr = $request->validated();
-        $attr['gym_id'] = Auth::user()->gym->id;
+        $attr['gym_id'] = session('gym_id');
         plans::create($attr);
         return redirect(route('admin.plans.index'));
     }
@@ -80,7 +79,7 @@ class PlansController extends Controller
     }
     public function search()
     {
-        $gym = Auth::user()->gym->id;
+        $gym = session('gym_id');
         $plans = plans::latest()->where('gym_id', '=', $gym)
             ->where('name', 'like', '%' . request('name') . '%')
             ->paginate(7);

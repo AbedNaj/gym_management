@@ -5,16 +5,16 @@
         @method('PATCH')
 
         <x-form.input name="name" value="{{ $plan->name}}">
-            Plan Name
+            {{ __('plans.PlanName') }}
         </x-form.input>
 
         <x-form.input name="duration_in_days" value="{{ $plan->duration_in_days}}">
-            Plan Duration
+            {{ __('plans.PlanDuration') }}
         </x-form.input>
         <x-form.input name="price" value="{{ $plan->price}}">
-            Plan Price
+            {{ __('plans.PlanPrice') }}
         </x-form.input>
-        <x-form.button>Save</x-form.button>
+        <x-form.button>{{ __('plans.save') }}</x-form.button>
 
 
 

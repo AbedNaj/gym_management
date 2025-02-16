@@ -43,6 +43,27 @@ export default {
                     900: '#0f172a',        // Dark primary
                     800: '#1e293b',        // Dark secondary
                     700: '#334155',        // Dark tertiary
+                },
+                admin: {
+
+                    aside: '#fefffe',
+                    asideText: '#000000',
+                    asidehover: '#27a8e2',
+                    button: '#27a8e2',
+                    tableHead: '#27a8e2',
+                    platinum: '#D3D4D9',
+
+                },
+                card: {
+                    one: '#27a8e2',
+                    two: '#29b679',
+                    three: '#2254a5',
+                    four: '#da542e',
+                    five: '#feb948',
+                    six: '#017bfe',
+                    sven: '#fec008',
+                    eigh: '#28a644',
+                    nine: '#dd3544',
                 }
             }
         },

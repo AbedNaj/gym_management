@@ -3,7 +3,7 @@
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full mx-auto">
     <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead class="text-xs text-black uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="p-4">
                     <div class="flex items-center justify-center">
@@ -16,7 +16,7 @@
                 <th scope="col" class="px-4 py-3">{{ $column['name'] }}</th>
                 @endforeach
 
-                <th scope="col" class="px-4 py-3">Actions</th>
+                <th scope="col" class="px-4 py-3">{{ __('table.Actions') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -31,13 +31,13 @@
                 @foreach ($columns as $key => $column)
                 <td class="px-4 py-4">
                     @if ($key === 'status')
-                    <span @class([ 'block w-full text-xs font-medium uppercase rounded-md py-1 text-center' , 'bg-green-200 text-green-900 border border-green-500'=> $data['status'] === 'active',
-                        'bg-red-200 text-red-900 border border-red-500' => $data['status'] === 'expired',
-                        'bg-orange-200 text-orange-900 border border-orange-500' => $data['status'] === 'suspended',
-                        'bg-gray-200 text-gray-900 border border-gray-400' => $data['status'] === 'canceled',
-                        'bg-yellow-200 text-yellow-900 border border-yellow-500' => $data['status'] === 'pending',
-                        'bg-green-200 text-green-800 border border-green-500' => $data['status'] === 'paid',
-                        'bg-red-200 text-red-800 border border-red-500' => $data['status'] === 'unpaid',
+                    <span @class([ 'block w-full text-xs font-medium uppercase rounded-md py-1 text-center' , 'bg-green-200 text-green-900 border border-green-500'=> $data['status'] === __('registration.active') ,
+                        'bg-red-200 text-red-900 border border-red-500' => $data['status'] === __('registration.expired'),
+                        'bg-orange-200 text-orange-900 border border-orange-500' => $data['status'] === __('registration.suspended'),
+                        'bg-gray-200 text-gray-900 border border-gray-400' => $data['status'] === __('registration.canceled'),
+                        'bg-yellow-200 text-yellow-900 border border-yellow-500' => $data['status'] === __('registration.pending'),
+                        'bg-green-200 text-green-800 border border-green-500' => $data['status'] === __('registration.paid'),
+                        'bg-red-200 text-red-800 border border-red-500' => $data['status'] === __('registration.unpaid') ,
                         ])>
                         {{ ucfirst($data['status']) }}
                     </span>
@@ -49,15 +49,13 @@
 
                 <td class="px-4 py-4 whitespace-nowrap">
                     <div class="flex justify-center gap-x-4">
-                        <a href="{{ route($editRoute, $data['id']) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">edit</a>
+                        <a href="{{ route($editRoute, $data['id']) }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{{ __('table.edit') }}</a>
 
 
                         @if ($delete==true)
                         <x-form.form method="post" action="{{ route($deleteRoute, $data['id']) }}" class="inline">
                             @method('DELETE')
-                            <x-form.button class="font-medium text-red-500 hover:text-red-600">
-                                delete
-                            </x-form.button>
+                            <x-form.button class="font-medium text-red-500 hover:text-red-600">{{ __('table.delete') }}</x-form.button>
                         </x-form.form>
                         @endif
 

@@ -2,7 +2,7 @@
     <div class="max-w-3xl  mx-auto">
         <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white border-b pb-3">
-                Customer Registration
+                {{ __('registration.CustomerRegistration') }}
             </h2>
 
             <x-form.form method="POST">
@@ -14,7 +14,7 @@
                         readonly
                         value="{{ $customerName }}"
                         class="bg-gray-100 dark:bg-gray-700 cursor-not-allowed">
-                        Customer Name
+                        {{ __('registration.CustomerName') }}
                     </x-form.input>
                 </div>
 
@@ -22,7 +22,7 @@
 
                 <div class="mt-8 flex justify-end">
                     <x-form.button class="px-8 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                        Complete Registration
+                        {{ __('registration.CompleteRegistration') }}
                     </x-form.button>
                 </div>
             </x-form.form>

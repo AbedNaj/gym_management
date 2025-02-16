@@ -1,29 +1,29 @@
-<x-admin title="Edit Registration">
+<x-admin title="{{ __('registration.EditRegistration') }}">
     <div class="container mx-auto p-4 space-y-6">
 
         <!-- Registration Details Card -->
         <div class="bg-white dark:bg-dark-secondary shadow rounded-lg">
             <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                    Registration Details
+                    {{ __('registration.RegistrationDetails') }}
                 </h2>
             </div>
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <x-form.readonly
                     name="user_name"
-                    label="User Name"
+                    label="{{ __('registration.CustomerName') }}"
                     value="{{ $registration['customer']['name'] }}" />
                 <x-form.readonly
                     name="plan_type"
-                    label="Plan Type"
+                    label="{{ __('registration.PlanType') }}"
                     value="{{ $registration['plans']['name'] }}" />
                 <x-form.readonly
                     name="start_date"
-                    label="Registration Start Date"
+                    label="{{ __('registration.RegistrationDate') }}"
                     value="{{ $registration['start_date'] }}" />
                 <x-form.readonly
                     name="end_date"
-                    label="Registration End Date"
+                    label="{{ __('registration.EndDate') }}"
                     value="{{ $registration['end_date'] }}" />
             </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="bg-white dark:bg-dark-secondary shadow rounded-lg">
             <div class="border-b border-gray-200 dark:border-gray-700 px-6 py-4">
                 <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                    Update Registration Status
+                    {{ __('registration.UpdateRegistrationStatus') }}
                 </h2>
             </div>
             <div class="p-6">
@@ -41,15 +41,16 @@
                     @method('PATCH')
 
                     <x-form.select
-                        defaultValue="Select a status"
+                        defaultValue="{{ __('registration.SelectStatus') }}"
                         name="status"
-                        :options="[ 1 => 'Active', 2 => 'Expired', 4 => 'Canceled' ]">
-                        Registration Status
+                        :options="$statusOptions">
+
+                        {{ __('registration.RegistrationStatus') }}
                     </x-form.select>
 
                     <div class="mt-4">
                         <x-form.button>
-                            Save Changes
+                            {{ __('registration.save') }}
                         </x-form.button>
                     </div>
                 </x-form.form>

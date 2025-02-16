@@ -1,13 +1,13 @@
-<x-admin title="Customer Registrations">
+<x-admin title="{{ __('registration.CustomerRegistrations') }}">
 
 
 
     <x-admin.table deleteRoute="admin.registration.delete" editRoute="admin.registration.edit"
         :columns="[
-      'customer.name' =>['name'=> 'Customer Nmae'],
-    'start_date' =>['name'=> 'Registration Date'],
-    'end_date' =>['name'=> 'End Date'],
-    'status' =>['name'=> 'status'],
+      'customer.name' =>['name'=> __('registration.CustomerName')],
+    'start_date' =>['name'=> __('registration.RegistrationDate')],
+    'end_date' =>['name'=> __('registration.EndDate')],
+    'status' =>['name'=> __('registration.status')],
     ]"
         :datas="$registration"
         :delete="false"></x-admin.table>

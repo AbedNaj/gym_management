@@ -1,15 +1,15 @@
-<x-admin title="Customer Debts - {{$CustomerName}}">
+<x-admin title="{{  __('debts.customerDebts')}} - {{$CustomerName}}">
 
 
 
-    <x-admin.table deleteRoute="admin.registration.delete" editRoute="admin.registration.edit"
+    <x-admin.table deleteRoute="admin.debt.delete" editRoute="admin.debt.edit"
         :columns="[
-   'debt_date' =>['name'=> 'Debt Date'],
-            'customer.name' =>['name'=> 'Customer Name'],
-            'debt_amount' =>['name'=> 'Debt Amount'],
-            'paid_amount' =>['name'=> 'Paid Amount'],
-                    'last_payment_date' =>['name'=> 'Payment Date'],
-                            'status' =>['name'=> 'Status'],
+   'debt_date' =>['name'=> __('debts.DebtDate')],
+            'customer.name' =>['name'=>  __('debts.CustomerName')],
+            'debt_amount' =>['name'=> __('debts.DebtAmount')],
+            'paid_amount' =>['name'=> __('debts.paidAmount')],
+                    'last_payment_date' =>['name'=> __('debts.PaymentDate')],
+                            'status' =>['name'=> __('debts.status')],
                                     
             ]"
         :datas="$debts"

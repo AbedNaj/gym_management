@@ -1,17 +1,17 @@
-<x-admin title="Select A Customer">
+<x-admin title="{{ __('registration.SelectACustomer') }}">
     <section class="shadow-lg rounded-xl bg-white dark:bg-gray-800 p-6 max-w-xl mx-auto">
         <section class="space-y-4">
             @livewire('Customer-Search')
 
             @if (isset($customerName))
             <div class="space-y-3 border-b pb-4 border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">Customer Details</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">{{ __('registration.CustomerDetails') }}</h3>
 
                 <div class="grid grid-cols-3 gap-4">
-                    <dt class="text-gray-600 dark:text-gray-400">Name:</dt>
+                    <dt class="text-gray-600 dark:text-gray-400">{{ __('registration.name') }}:</dt>
                     <dd class="col-span-2 font-medium text-gray-900 dark:text-gray-200">{{ $customerName }}</dd>
 
-                    <dt class="text-gray-600 dark:text-gray-400">Status:</dt>
+                    <dt class="text-gray-600 dark:text-gray-400">{{ __('registration.status') }}:</dt>
                     <dd class="col-span-2">
                         <span @class([ 'px-2 py-1 rounded-full text-sm' , 'bg-green-100 text-green-800'=> $registration?->status === 'active',
                             'bg-red-100 text-red-800' => $registration?->status === 'expired',
@@ -23,12 +23,12 @@
                         </span>
                     </dd>
 
-                    <dt class="text-gray-600 dark:text-gray-400">Start Date:</dt>
+                    <dt class="text-gray-600 dark:text-gray-400">{{ __('registration.RegistrationDate') }}:</dt>
                     <dd class="col-span-2 text-gray-700 dark:text-gray-300">
                         {{ optional($registration)->start_date ?? 'N/A' }}
                     </dd>
 
-                    <dt class="text-gray-600 dark:text-gray-400">End Date:</dt>
+                    <dt class="text-gray-600 dark:text-gray-400">{{ __('registration.EndDate') }}:</dt>
                     <dd class="col-span-2 text-gray-700 dark:text-gray-300">
                         {{ optional($registration)->end_date ?? 'N/A' }}
                     </dd>
@@ -40,7 +40,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                View All Registrations
+                {{ __('registration.ViewAllRegistrations') }}
+
+
             </a>
 
 
@@ -48,7 +50,7 @@
             <x-admin.button
 
                 href="{{ route('admin.registration.create' , $customerID ) }}">
-                Register
+                {{ __('registration.newRegister') }}
             </x-admin.button>
             @endif
 

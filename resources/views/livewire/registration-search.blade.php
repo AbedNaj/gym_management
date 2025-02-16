@@ -11,12 +11,12 @@
                 wire:keydown.tab="fresh"
                 wire:keydown.arrow-up='decrementHighLight'
                 wire:keydown.arrow-down='incrementHighLight'
-                placeholder="Search"
+                placeholder="  {{ __('registration.search') }}"
                 autocomplete="off">
 
 
             <div wire:loading class="absolute z-10 w-full bg-white shadow-lg rounded-b-lg max-h-60 overflow-auto">
-                <div class="list-item">Searching...</div>
+                <div class="list-item">{{ __('registration.Searching') }}</div>
             </div>
 
             @if(!empty($customers) && !empty($query))
@@ -37,7 +37,7 @@
             @elseif($query !== '' && $customers == [])
             <div class="absolute z-10 w-full bg-white shadow-lg rounded-b-lg">
                 <div class="p-2 text-gray-500">
-                    No results found!
+                    {{ __('registration.NoResults') }}
                 </div>
             </div>
             @endif
@@ -48,15 +48,15 @@
             <select name="status"
                 class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                 wire:model.live="selectedValue">
-                <option value="">Select a Status</option>
-                @foreach ($datas as $data)
-                <option value="{{ $data }}">{{ $data }}</option>
+                <option value="">{{ __('registration.SelectStatus') }}</option>
+                @foreach($datas as $key => $value)
+                <option value="{{ $key }}">{{ $value }}</option>
                 @endforeach
             </select>
         </div>
         @if (Route::is('admin.registration.search'))
 
-        <x-button href="{{route('admin.registration.index')}}">reset</x-button>
+        <x-button href="{{route('admin.registration.index')}}">{{ __('registration.reset') }}</x-button>
 
         @endif
     </div>

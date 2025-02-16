@@ -1,4 +1,4 @@
-<x-admin title="Debt">
+<x-admin title="{{ __('debts.title') }}">
 
     <section class="flex flex-wrap items-center gap-4 md:justify-between">
         <div>
@@ -11,7 +11,7 @@
         </div>
         <div>
             <x-admin.button href="{{ route('admin.debt.show') }}">
-                Add New Debt
+                {{ __('debts.addNew') }}
             </x-admin.button>
         </div>
     </section>
@@ -21,12 +21,13 @@
         deleteRoute="admin.debt.delete"
         editRoute="admin.debt.edit"
         :columns="[
-            'debt_date' =>['name'=> 'Debt Date'],
-            'customer.name' =>['name'=> 'Customer Name'],
-            'debt_amount' =>['name'=> 'Debt Amount'],
-            'paid_amount' =>['name'=> 'Paid Amount'],
-                    'last_payment_date' =>['name'=> 'Payment Date'],
-                            'status' =>['name'=> 'Status'],
+                   'customer.name' =>['name'=> __('debts.CustomerName')],
+            'debt_date' =>['name'=>  __('debts.DebtDate')],
+     
+            'debt_amount' =>['name'=> __('debts.DebtAmount')],
+            'paid_amount' =>['name'=> __('debts.paidAmount')],
+                    'last_payment_date' =>['name'=> __('debts.PaymentDate')],
+                            'status' =>['name'=> __('debts.status')],
                                     
             ]"
         :datas="$debts" />

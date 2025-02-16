@@ -1,9 +1,9 @@
 @props(['svg' , 'active' =>'false'])
 
 @php
-$style = 'flex items-center px-4 py-3 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 ';
+$style = 'flex items-center px-4 py-3 text-admin-asideText dark:text-gray-300 hover:bg-admin-asidehover dark:hover:bg-gray-700 ';
 if ($active === true)
-$style .= ' bg-gray-100 dark:bg-gray-700'
+$style .= ' bg-admin-asidehover text-white dark:bg-gray-700'
 
 @endphp
 <a {{ $attributes->merge(['class' => $style]) }}>

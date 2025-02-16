@@ -5,13 +5,13 @@
         @method('PATCH')
 
         <x-form.input name="name" value="{{ $customer->name}}">
-            Customer Name
+            {{ __('customers.CustomerName') }}
         </x-form.input>
 
         <x-form.input name="phoneNumber" value="{{ $customer->phoneNumber}}">
-            Customer Phone Number
+            {{ __('customers.PhoneNumber') }}
         </x-form.input>
-        <x-form.button>Save</x-form.button>
+        <x-form.button>{{ __('customers.save') }}</x-form.button>
 
 
 

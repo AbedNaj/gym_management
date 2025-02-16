@@ -27,6 +27,12 @@ class DebtsController extends Controller
             ->orderByDesc('debt_date')
             ->latest()
             ->paginate(7);
+
+        $debts->getCollection()->transform(function ($item) {
+            $item->status = __('debts.' . $item->status);
+            return $item;
+        });
+
         return view('admin.debts.index', ['debts' => $debts]);
     }
 
@@ -92,6 +98,10 @@ class DebtsController extends Controller
             ->orderByDesc('debt_date')
             ->paginate(7);
 
+        $debts->getCollection()->transform(function ($item) {
+            $item->status = __('debts.' . $item->status);
+            return $item;
+        });
         return view('admin.debts.show-all', ['debts' => $debts, 'CustomerName' => $customer->name]);
     }
 
@@ -160,6 +170,11 @@ class DebtsController extends Controller
             ->where('gym_id', $gym)
             ->paginate(7);
 
+        $debts->GetCollection()->transform(function ($item) {
+
+            $item->status = __('debts.' . $item->status);
+            return ($item);
+        });
         return view('admin.debts.index', ['debts' => $debts]);
     }
 }
