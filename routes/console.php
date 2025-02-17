@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Schedule::command(UpdateExpiredRegistrations::class)->daily();
+Schedule::command('auth:clear-resets')->everyFifteenMinutes();

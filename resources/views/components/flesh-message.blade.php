@@ -1,6 +1,8 @@
-@if (session('success'))
+@props(['sessionName' => 'success' ])
+
+
 <div id="flash-message" class="bg-green-500 text-white p-4 rounded-lg mb-4">
-    {{ session('success') }}
+    {{ session($sessionName) }}
 </div>
 
 <script>
@@ -13,4 +15,3 @@
         }
     }, 1000);
 </script>
-@endif

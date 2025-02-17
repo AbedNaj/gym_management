@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\EmailVerify;
+use App\Http\Controllers\EmailVerifyController;
+use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\RegisterUserController;
@@ -8,6 +11,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DebtsController;
+use App\Http\Controllers\ResetPassword;
 use App\Models\debts;
 use App\Models\registration;
 use Illuminate\Support\Facades\Route;
@@ -34,12 +38,45 @@ Route::middleware('guest')->group(function () {
         Route::get('/register', 'create')->name('register');
         Route::post('/register', 'store');
     });
+
+    // forgotPassword
+
+    Route::controller(ForgotPassword::class)->group(function () {
+
+        Route::get('/forgot-password', 'create')->name('forgot');
+        Route::post('/forgot-password', 'store');
+    });
+
+    // Reser Password
+    Route::controller(ResetPassword::class)->group(function () {
+
+        Route::get('/reset-password/{token}', 'create')->name('password.reset');
+        Route::post('/reset-password', 'store')->name('password.update');
+    });
 });
 
-// Authenticated routes
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
+    // Email Verify 
+
+    Route::controller(EmailVerifyController::class)->group(function () {
+        Route::get('/email/verify', 'verifyNotice')->name('verification.notice');
+
+        Route::get('/email/verify/{id}/{hash}', 'verifyEmail')->middleware(['signed'])->name('verification.verify');
+
+
+        Route::post('/email/verification-notification', 'verifyNotification')->middleware(['throttle:6,1'])->name('verification.send');
+    });
+
     // Logout
     Route::delete('/logout', [SessionController::class, 'destroy'])->name('logout');
+});
+
+
+// Authenticated routes
+Route::middleware(['auth', 'verified'])->group(function () {
+
+
+
 
     // Admin panel
     Route::prefix('/admin')->name('admin.')->group(function () {
@@ -103,7 +140,7 @@ Route::middleware('auth')->group(function () {
             Route::get('registration/statistics/expired', 'expired')->name('registration.statistics.expired');
             Route::get('registration/statistics/expired-today', 'expiredToday')->name('registration.statistics.expiredToday');
         });
-
+        // Debts
         Route::controller(DebtsController::class)->group(function () {
 
 

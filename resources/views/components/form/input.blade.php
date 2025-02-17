@@ -1,4 +1,4 @@
-@props(['name' =>null , 'label'=>'null' , 'placeholder' => null])
+@props(['name' =>'null' , 'label'=>'null' , 'placeholder' => null])
 @php
 $defaults = [
 'type' => 'text',

@@ -64,7 +64,10 @@
                     </div>
                 </div>
             </div>
-            <x-success-message></x-success-message>
+            @if (session('success'))
+            <x-flesh-message></x-flesh-message>
+
+            @endif
             {{ $slot }}
         </main>
     </div>
