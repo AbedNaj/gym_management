@@ -41,4 +41,21 @@ return [
     'unpaid' => 'unpaid',
     'statistics' => 'Registration Statistics',
     'reset' => 'Reset',
+    'setFreeze' => 'Freeze the registration',
+    'setCanceled' => 'Cancel the registration',
+
+    // freeze
+    'freeze' => 'Registration Freeze',
+    'freezeDuration' => 'Freeze Duration',
+    'CancelTheFreeze' => 'Cancel The Freeze',
+    'FreezeDetails' => 'Freeze Details',
+
+    'FreezePeriodStart' => 'Freeze Period Start',
+    'FreezePeriodEnd' => 'Freeze Period End',
+    'FreezeDuration' => 'Freeze Duration',
+    'PostFreezeAvailability' => 'Post Freeze Availability',
+    'OriginalTerminationDate' => 'Original end Date',
+    'TerminateFreezePeriod' => 'Terminate Freeze Period',
+    'days' => 'Days',
+    'showAllFreezes' => 'All Freezes'
 ];

@@ -41,5 +41,21 @@ return [
     'unpaid' => 'غير مدفوع',
     'statistics' => 'إحصائيات التسجيل',
     'reset' => 'إعادة تعيين',
+    'setFreeze' => 'تجميد التسجيل',
+    'setCanceled' => 'الغاء التسجيل',
 
+    // freeze
+    'freeze' => 'تجميد التسجيل',
+    'freezeDuration' => 'مدة التجميد',
+    'CancelTheFreeze' => 'إيقاف التجميد',
+    'FreezeDetails' => 'تفاصيل التجميد',
+
+    'FreezePeriodStart' => 'تاريخ بداية التجميد',
+    'FreezePeriodEnd' => 'تاريخ إنتهاء التجميد',
+    'FreezeDuration' => 'مدة التجميد',
+    'PostFreezeAvailability' => 'عدد أيام الإشتراك المتبقية',
+    'OriginalTerminationDate' => 'تاريخ إنتهاء التسجيل الأصلي',
+    'TerminateFreezePeriod' => 'إنهاء فترة التجميد',
+    'days' => 'يوم',
+    'showAllFreezes' =>  'الإشتراكات المجمده'
 ];

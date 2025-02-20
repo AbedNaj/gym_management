@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Freeze;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Gym;

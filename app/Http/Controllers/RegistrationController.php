@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\debts;
+use App\Models\Freeze;
 use App\Models\plans;
 use App\Models\registration;
 use App\Http\Requests\StoreregistrationRequest;
@@ -17,9 +18,7 @@ use Illuminate\Validation\ValidationException;
 
 class RegistrationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
 
@@ -136,36 +135,32 @@ class RegistrationController extends Controller
 
         return view('admin.registration.show-all', ['registration' => $registration]);
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Registration $registration)
     {
 
-        $data = Registration::select('id', 'start_date', 'end_date', 'customer_id', 'plans_id')
-            ->with(['customer:id,name'], ['plan:id,name'])
-            ->findOrFail($registration->id);
 
-        $statusOptions = registration::getStatusOptions();
+        $freeze = Freeze::latest()->select(
+            'id',
+            'freeze_start_date',
+            'freeze_end_date',
+            'registration_end_date',
+            'freeze_duration',
+            'end_date_remening_days'
+        )
+            ->where('registration_id', '=', $registration->id)->first();
 
 
         return view('admin.registration.edit', [
-            'registration' => $data,
-            'statusOptions' => $statusOptions
+            'registration' => $registration,
+            'freeze' => $freeze
         ]);
     }
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateregistrationRequest $request, registration $registration)
     {
-        $attr =   $request->validate([
-            'status' => [
-                'required',
 
-            ],
-        ]);
-        $registration->update($attr);
+        $registration->update(['status' => 'canceled']);
 
         return redirect(route('admin.registration.index'));
     }
@@ -201,7 +196,6 @@ class RegistrationController extends Controller
 
         return view('admin.registration.index', ['registration' => $registrations->appends(request()->query())]);
     }
-
 
     // statistics 
 

@@ -7,6 +7,7 @@ return [
     'AddNewCustomer' => 'إضافة زبون جديد',
     'Search' => 'البحث',
     'add' => 'إضافة',
-    'save' => 'حفظ'
-
+    'save' => 'حفظ',
+    'customerEdit' => 'تعديل بيانات الزبون',
+    'customerAdd' => 'اضافة زبون جديد',
 ];

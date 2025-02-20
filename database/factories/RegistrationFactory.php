@@ -23,8 +23,8 @@ class RegistrationFactory extends Factory
             //    'plans_id' => plans::factory(),
             //    'gym_id' => Gym::factory(),
             //    'customer_id' => Customer::factory(),
-            'start_date' => fake()->date(),
-            'end_date' => fake()->date(),
+            'start_date' => fake()->dateTimeBetween('-1 months', 'now'),
+            'end_date' => fake()->dateTimeBetween('now', '+3 months'),
 
         ];
     }

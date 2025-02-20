@@ -9,4 +9,6 @@ return [
     'add' => 'Add',
     'save' => 'Save',
     'indays' => 'in days',
+    'planEdit' => 'Plan Edit',
+    'planAdd' => 'Add New Plan',
 ];

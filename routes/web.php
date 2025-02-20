@@ -3,6 +3,7 @@
 use App\Http\Controllers\EmailVerify;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\ForgotPassword;
+use App\Http\Controllers\FreezeController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\RegisterUserController;
@@ -124,7 +125,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
             Route::get('/registration/registrations/{customer?}', 'showAll')->name(name: 'registration.showAll')->can('create', [registration::class, 'customer']);
 
-            Route::post('/registration/create/{customer?}', 'store');
+            Route::post('/registration/create/{customer?}', 'store')->can('create', [registration::class, 'customer']);
             Route::get('/registration/create/{customer?}', 'create')->name(name: 'registration.create')->can('create', [registration::class, 'customer']);
 
 
@@ -134,11 +135,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::delete('/registration/destroy/{registration}', 'destroy')->name('registration.delete')->can('delete', 'Registration');
             Route::get('registration/search', 'search')->name('registration.search');
 
+
             // statistics :
 
             Route::get('registration/statistics/active', 'active')->name('registration.statistics.active');
             Route::get('registration/statistics/expired', 'expired')->name('registration.statistics.expired');
             Route::get('registration/statistics/expired-today', 'expiredToday')->name('registration.statistics.expiredToday');
+        });
+
+        //freeze
+
+        Route::controller(FreezeController::class)->group(function () {
+            Route::get('/registration/freezes', 'index')->name('freeze.index');
+
+            Route::get('/registration/freeze/{registration}', 'create')->name('freeze.create')->can('update', 'registration');
+            Route::post('/registration/freeze/{registration}', 'store');
+
+            Route::get('/registration/freeze/show/{freeze}', 'show')->name('freeze.show')->can('view', 'freeze');
+
+            Route::patch('/registration/freeze/{freeze}', 'update')->name('freeze.update');
         });
         // Debts
         Route::controller(DebtsController::class)->group(function () {

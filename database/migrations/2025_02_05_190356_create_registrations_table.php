@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignIdFor(Customer::class);
             $table->foreignIdFor(Gym::class);
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->enum('status', ['active', 'expired', 'pending', 'canceled', 'freezed'])->default('active');
             $table->timestamps();
         });

@@ -21,7 +21,6 @@ class registration extends Model
             'active'   => __('registration.active'),
             'expired'  => __('registration.expired'),
             'canceled' => __('registration.canceled'),
-            'pending'  => __('registration.pending'),
             'freezed'  => __('registration.freezed'),
         ];
     }
@@ -45,5 +44,9 @@ class registration extends Model
     public function debt()
     {
         return $this->hasOne(debts::class);
+    }
+    public function freeze()
+    {
+        return $this->hasOne(Freeze::class);
     }
 }

@@ -10,7 +10,8 @@
     @if ($route !== 'admin.dashboard')
 
 
-    <a class="flex justify-between hover:bg-gray-50 dark:hover:bg-gray-700 mt-4 text-{{ $color }}-600 dark:text-{{ $color }}-400 " href="{{ route($route) }}">
+    <a class="flex justify-between hover:bg-gray-50 dark:hover:bg-gray-700 mt-4 
+    text-{{ $color }}-600 dark:text-{{ $color }}-400 " href="{{ route($route) }}">
         {{ __('dashboard.more') }}
 
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">

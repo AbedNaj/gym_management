@@ -1,8 +1,9 @@
 <?php
 return [
+
     'email' => 'الإيميل',
     'password' => 'كلمة المرور',
-    'register' => 'انشاء حساب',
+    'register' => 'انشاء حساب جديد',
     'confirmation' => 'تأكيد كلمة المرور',
     'login' => 'تسجيل الدخول',
     'location' => 'موقع النادي',

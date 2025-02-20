@@ -46,7 +46,7 @@
             </a>
 
 
-            @if ($registration?->status !== 'active')
+            @if ($registration?->status !== 'active' && $registration?->status !== 'freezed')
             <x-admin.button
 
                 href="{{ route('admin.registration.create' , $customerID ) }}">
