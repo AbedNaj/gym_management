@@ -49,4 +49,8 @@ class registration extends Model
     {
         return $this->hasOne(Freeze::class);
     }
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

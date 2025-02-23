@@ -1,4 +1,11 @@
-@props(['columns' => [], 'datas' => [],'editRoute' , 'deleteRoute' , 'delete' =>true ])
+@props(['columns' => [], 'datas' => [],
+'editRoute' =>'admin.dashboard' ,
+'deleteRoute' =>'admin.dashboard',
+'detailsRoute' => 'admin.dashboard',
+'edit' => true ,
+'delete' =>true,
+'details' => false,
+])
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full mx-auto">
 
@@ -43,10 +50,18 @@
 
 
             <div class="px-4 py-3 flex justify-end gap-3 bg-gray-50 dark:bg-gray-700">
+
+                @if ($edit == true)
                 <a href="{{ route($editRoute, $data['id']) }}"
                     class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">
                     {{ __('table.edit') }}
                 </a>
+
+                @endif
+
+
+
+
                 @if ($delete==true)
                 <x-form.form method="post" action="{{ route($deleteRoute, $data['id']) }}" class="inline">
                     @method('DELETE')
@@ -55,6 +70,18 @@
                     </x-form.button>
                 </x-form.form>
                 @endif
+
+
+
+                @if ($details == true)
+                <a href="{{ route($detailsRoute, $data['id']) }}"
+                    class="text-sm font-medium text-blue-600 dark:text-blue-500 hover:underline">
+                    {{ __('table.edit') }}
+                </a>
+
+                @endif
+
+
             </div>
         </div>
         @endforeach
@@ -109,11 +136,14 @@
 
                 <td class="px-4 py-4 whitespace-nowrap">
                     <div class="flex justify-center gap-x-4">
+                        @if ($edit == true)
+
+
                         <a href="{{ route($editRoute, $data['id']) }}"
                             class="font-medium text-blue-600 dark:text-blue-500 hover:underline">
                             {{ __('table.edit') }}
                         </a>
-
+                        @endif
                         @if ($delete==true)
                         <x-form.form method="post" action="{{ route($deleteRoute, $data['id']) }}" class="inline">
                             @method('DELETE')
@@ -121,6 +151,14 @@
                                 {{ __('table.delete') }}
                             </x-form.button>
                         </x-form.form>
+                        @endif
+
+                        @if ($details == true)
+                        <a href="{{ route($detailsRoute, $data['id']) }}"
+                            class="text-sm font-medium text-green-600 dark:text-green-500 hover:underline">
+                            {{ __('table.details') }}
+                        </a>
+
                         @endif
                     </div>
                 </td>

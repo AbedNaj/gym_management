@@ -9,6 +9,8 @@ return [
     'Search' => 'Search',
     'add' => 'Add',
     'save' => 'Save',
-    'customerAdd' => 'Add New Cusotmer'
-
+    'customerAdd' => 'Add New Cusotmer',
+    'Searching' => 'Searching...',
+    'NoResults' => 'No results Found!',
+    'reset' => 'Reset',
 ];

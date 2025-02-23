@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CustomerSearchController;
 use App\Http\Controllers\EmailVerify;
 use App\Http\Controllers\EmailVerifyController;
 use App\Http\Controllers\ForgotPassword;
 use App\Http\Controllers\FreezeController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PlansController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\RegistrationController;
@@ -17,6 +19,7 @@ use App\Models\debts;
 use App\Models\registration;
 use Illuminate\Support\Facades\Route;
 
+use function Pest\Laravel\get;
 
 // Public welcome page
 Route::get('/', function () {
@@ -81,6 +84,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin panel
     Route::prefix('/admin')->name('admin.')->group(function () {
+
+        // Customer Search (this route is for Customer Search with auto complete)
+
+        Route::get('/customers/search/all', CustomerSearchController::class)->name('customers.search.all');
+
+
         // Dashboard
         Route::get('/', [AdminController::class, 'index'])->name('dashboard');
 
@@ -174,6 +183,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/debt/{debt}/edit', 'edit')->name('debt.edit')->can('update', 'debt');
 
             Route::get('debt/search', 'search')->name('debt.search');
+        });
+
+        //payments
+        Route::controller(PaymentController::class)->group(function () {
+            Route::get('/payments', 'index')->name('payment.index');
+
+            Route::get('/payments/{payment}/show', 'show')->name('payment.show');
+
+            Route::get('/payments/search', 'search')->name('payment.search');
         });
     });
 });

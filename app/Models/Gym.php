@@ -43,4 +43,8 @@ class Gym extends Model
     {
         return $this->hasMany(Freeze::class);
     }
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

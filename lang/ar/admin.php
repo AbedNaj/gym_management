@@ -8,5 +8,5 @@ return [
     'Debts' => 'الديون',
     'settings' => 'الإعدادات',
     'signOut' => 'تسجيل الخروج',
-
+    'payments' => 'الدفعات',
 ];

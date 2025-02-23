@@ -41,4 +41,9 @@ class debts extends Model
     {
         return $this->belongsTo(Gym::class);
     }
+
+    public function payment()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

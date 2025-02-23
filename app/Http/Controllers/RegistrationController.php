@@ -10,6 +10,7 @@ use App\Models\plans;
 use App\Models\registration;
 use App\Http\Requests\StoreregistrationRequest;
 use App\Http\Requests\UpdateregistrationRequest;
+use App\Models\Payment;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
@@ -34,7 +35,7 @@ class RegistrationController extends Controller
             }])
             ->paginate(perPage: 7);
 
-        // Map the status values to their translated versions
+
         $registration->getCollection()->transform(function ($item) {
             $item->status = __('registration.' . $item->status);
             return $item;
@@ -86,8 +87,21 @@ class RegistrationController extends Controller
         } elseif ($attr['paid_amount'] >  $attr['plan_price']) {
             throw ValidationException::withMessages(['paid_amount' => 'Payed Price Is More Than Plan Price']);
         }
-        $attr = registration::create($attr);
+        $registration = Registration::create($attr)->id;
+        $registrationId = $registration;
 
+
+
+
+        // create a payment for the current registration
+
+        Payment::create([
+            'amount' => $attr['paid_amount'],
+            'registration_id' => $registrationId,
+            'gym_id' => $attr['gym_id'],
+            'customer_id' => $attr['customer_id'],
+            'payment_date' => Carbon::now(),
+        ]);
 
         return redirect(route('admin.registration.index'));
     }

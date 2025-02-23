@@ -8,5 +8,5 @@ return [
     'Debts' => 'Debts',
     'settings' => 'Settings',
     'signOut' => 'Sign out',
-
+    'payments' => 'Payments',
 ];

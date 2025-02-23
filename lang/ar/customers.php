@@ -10,4 +10,7 @@ return [
     'save' => 'حفظ',
     'customerEdit' => 'تعديل بيانات الزبون',
     'customerAdd' => 'اضافة زبون جديد',
+    'Searching' => 'يتم البحث...',
+    'NoResults' => 'لا يوجد نتائج',
+    'reset' => 'إعادة تعيين',
 ];

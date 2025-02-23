@@ -6,6 +6,8 @@ use App\Models\debts;
 use App\Http\Requests\StoredebtsRequest;
 use App\Http\Requests\UpdatedebtsRequest;
 use App\Models\Customer;
+use App\Models\Payment;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
@@ -53,16 +55,31 @@ class DebtsController extends Controller
      */
     public function store(StoredebtsRequest $request, Customer $customer)
     {
+
+
         $atrr = $request->validated();
         $atrr['gym_id'] = Session::get('gym_id');
         $atrr['debt_date'] = now()->toDateString();
+
+
         if ($atrr['debt_amount'] == $atrr['paid_amount']) {
             $atrr['status'] = 'paid';
         } elseif ($atrr['debt_amount'] < $atrr['paid_amount']) {
             throw ValidationException::withMessages(['paid_amount' => 'Paid amount is more than debt amount']);
         }
 
-        debts::create($atrr);
+
+        $debtID =  debts::create($atrr)->id;
+
+        if ($atrr['paid_amount'] > 0) {
+            Payment::create([
+                'amount' => $atrr['paid_amount'],
+                'debts_id' => $debtID,
+                'gym_id' => $atrr['gym_id'],
+                'customer_id' => $atrr['customer_id'],
+                'payment_date' => Carbon::now(),
+            ]);
+        }
 
         return redirect()->route('admin.debts.index')->with('success', 'Debt Created Successfully');
     }
@@ -76,11 +93,16 @@ class DebtsController extends Controller
             ->where('gym_id', '=', Session::get('gym_id'))
             ->sum('debt_amount');
 
+
+
         $paid_amount = debts::where('customer_id', '=', $customer->id)
             ->where('gym_id', '=', Session::get('gym_id'))
             ->sum('paid_amount');
+
+
         $debts =  debts::where('customer_id', '=', $customer->id)
             ->where('gym_id', '=', Session::get('gym_id'))->get();
+
 
         return view('admin.debts.show', [
             'customerID' => $customer->id,
@@ -123,21 +145,34 @@ class DebtsController extends Controller
      */
     public function update(UpdatedebtsRequest $request, debts $debt)
     {
+
         $atrr = $request->validated();
 
         $atrr['last_payment_date'] = now()->toDateString();
 
+        $currentPaid = $atrr['paid_amount'];
+
+        // total paid amount
         $atrr['paid_amount'] = $debt->paid_amount + $atrr['paid_amount'];
 
         if ($atrr['debt_amount'] == $atrr['paid_amount']) {
             $atrr['status'] = 'paid';
-        } elseif ($atrr['debt_amount'] < $atrr['paid_amount'] ||  $debt->paid_amount + $atrr['paid_amount'] > $atrr['debt_amount']) {
+        } elseif ($atrr['debt_amount'] < $atrr['paid_amount']) {
             throw ValidationException::withMessages(['paid_amount' => 'Paid amount is more than debt amount']);
         }
 
+        $customerID = $debt->customer->id;
+
 
         $debt->update($atrr);
+        Payment::create([
+            'amount' => $currentPaid,
+            'debts_id' => $debt->id,
+            'gym_id' => Session('gym_id'),
+            'customer_id' => $customerID,
+            'payment_date' => Carbon::now()
 
+        ]);
         return redirect()->route('admin.debts.index')->with('success', 'Debt Payed successfully!');
     }
 

@@ -10,6 +10,7 @@ use App\Models\Plan;
 use App\Models\Customer;
 use App\Models\Registration;
 use App\Models\Debts;
+use App\Models\Payment;
 use App\Models\plans;
 
 class DatabaseSeeder extends Seeder
@@ -50,6 +51,12 @@ class DatabaseSeeder extends Seeder
 
                 $registrations->each(function ($registration) use ($gym, $customer) {
                     Debts::factory(1)->create([
+                        'gym_id' => $gym->id,
+                        'customer_id' => $customer->id,
+                        'registration_id' => $registration->id,
+                    ]);
+
+                    Payment::factory(1)->create([
                         'gym_id' => $gym->id,
                         'customer_id' => $customer->id,
                         'registration_id' => $registration->id,
